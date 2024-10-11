@@ -195,6 +195,8 @@ def flowers(flower_id):
 
 @app.route('/lab2/add_flower/<name>')
 def add_flower(name):
+    if not name:
+        abort(400, description="Вы не задали имя цветка")
     flower_list.append(name)
     return f'''
 <!doctype html>
@@ -230,3 +232,30 @@ def lab2():
 def filters():
     phrase = "О <b>сколько</b> <u>нам</u> <i>открытий</i> чудных..."
     return render_template('filter.html', phrase = phrase)
+
+@app.route('/lab2/calc/<int:a>/<int:b>')
+def calc(a, b):
+    return f'''
+    <!doctype html>
+    <html>
+        <body>
+            <h1>Математические операции с числами {a} и {b}</h1>
+            <p>{a} + {b} = {a + b}</p>
+            <p>{a} - {b} = {a - b}</p>
+            <p>{a} * {b} = {a * b}</p>
+            <p>{a} / {b} = {"∞" if b == 0 else a / b}</p>
+            <p>{a} <sup> {b} = {a ** b}</p>
+            <p><a href="{url_for('calc_default')}">Вернуться к расчету с 1 и 1</a></p>
+        </body>
+    </html>
+    '''
+
+# Обработчик для перенаправления по умолчанию на calc/1/1
+@app.route('/lab2/calc/')
+def calc_default():
+    return redirect(url_for('calc', a=1, b=1))
+
+# Обработчик для перенаправления с одного числа на calc/a/1
+@app.route('/lab2/calc/<int:a>')
+def calc_single(a):
+    return redirect(url_for('calc', a=a, b=1))
