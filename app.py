@@ -213,5 +213,5 @@ def example():
     name = 'Алина Мицевич'
     lab_number = 2
     group = 'ФБИ-24'
-    course = 3
+    course = '3 курс'
     return render_template('example.html', name=name, lab_number=lab_number, group=group, course=course)
