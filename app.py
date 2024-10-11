@@ -259,3 +259,21 @@ def calc_default():
 @app.route('/lab2/calc/<int:a>')
 def calc_single(a):
     return redirect(url_for('calc', a=a, b=1))
+
+books = [
+    {"title": "1984", "author": "Джордж Оруэлл", "genre": "Антиутопия", "pages": 328},
+    {"title": "Убить пересмешника", "author": "Харпер Ли", "genre": "Классика", "pages": 281},
+    {"title": "Моби Дик", "author": "Герман Мелвилл", "genre": "Приключения", "pages": 720},
+    {"title": "Великий Гэтсби", "author": "Фрэнсис Скотт Фицджеральд", "genre": "Классика", "pages": 180},
+    {"title": "О дивный новый мир", "author": "Олдос Хаксли", "genre": "Научная фантастика", "pages": 288},
+    {"title": "Война и мир", "author": "Лев Толстой", "genre": "Исторический роман", "pages": 1225},
+    {"title": "Над пропастью во ржи", "author": "Джером Д. Сэлинджер", "genre": "Классика", "pages": 277},
+    {"title": "Хоббит, или Туда и обратно", "author": "Дж. Р. Р. Толкин", "genre": "Фэнтези", "pages": 310},
+    {"title": "Гордость и предубеждение", "author": "Джейн Остин", "genre": "Роман", "pages": 432},
+    {"title": "Одиссея", "author": "Гомер", "genre": "Эпическая поэма", "pages": 541}
+]
+
+# Обработчик для вывода списка книг
+@app.route('/books')
+def book_list():
+    return render_template('books.html', books=books)
