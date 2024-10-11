@@ -213,6 +213,31 @@ def add_flower(name):
 </html>
 '''
 
+@app.route('/lab2/flowers')
+def all_flowers():
+    return f'''
+    <!doctype html>
+    <html>
+        <body>
+            <h1>Все цветы</h1>
+            <p>Всего цветов: {len(flower_list)}</p>
+            <ul>
+                {''.join(f'<li>{flower}</li>' for flower in flower_list)}
+            </ul>
+            <p><a href="{url_for('clear_flowers')}">Очистить список цветов</a></p>
+        </body>
+    </html>
+    '''
+
+@app.route('/lab2/clear_flowers')
+def clear_flowers():
+    flower_list.clear()
+    return redirect(url_for('all_flowers'))
+
+@app.route('/lab2/add_flower/')
+def add_flower_without_name():
+    return "Вы не задали имя цветка", 400
+
 @app.route('/lab2/example')
 def example():
     name, lab_number, group, course = 'Алина Мицевич', 2, 'ФБИ-24', '3 курс'
