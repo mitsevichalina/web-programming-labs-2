@@ -250,12 +250,10 @@ def calc(a, b):
     </html>
     '''
 
-# Обработчик для перенаправления по умолчанию на calc/1/1
 @app.route('/lab2/calc/')
 def calc_default():
     return redirect(url_for('calc', a=1, b=1))
 
-# Обработчик для перенаправления с одного числа на calc/a/1
 @app.route('/lab2/calc/<int:a>')
 def calc_single(a):
     return redirect(url_for('calc', a=a, b=1))
@@ -273,7 +271,38 @@ books = [
     {"title": "Одиссея", "author": "Гомер", "genre": "Эпическая поэма", "pages": 541}
 ]
 
-# Обработчик для вывода списка книг
 @app.route('/books')
 def book_list():
     return render_template('books.html', books=books)
+
+furniture_items = [
+    {
+        "name": "Стул",
+        "description": "Удобный стул для вашего дома.",
+        "image": "chair.jpg"
+    },
+    {
+        "name": "Стол",
+        "description": "Прочный стол для обеденной зоны.",
+        "image": "table.jpg"
+    },
+    {
+        "name": "Диван",
+        "description": "Комфортабельный диван для гостиной.",
+        "image": "sofa.jpg"
+    },
+    {
+        "name": "Книжный шкаф",
+        "description": "Элегантный шкаф для книг и аксессуаров.",
+        "image": "bookshelf.jpg"
+    },
+    {
+        "name": "Кровать",
+        "description": "Уютная кровать для комфортного сна.",
+        "image": "bed.jpg"
+    }
+]
+
+@app.route('/furniture')
+def furniture_list():
+    return render_template('furniture.html', items=furniture_items)

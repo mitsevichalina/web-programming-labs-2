@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мебель</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .item {
+            margin: 20px;
+            display: inline-block;
+            text-align: center;
+        }
+        img {
+            max-width: 200px;
+            max-height: 150px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Список мебели</h1>
+    <div>
+        {% for item in items %}
+        <div class="item">
+            <img src="{{ url_for('static', filename=item.image) }}" alt="{{ item.name }}">
+            <h2>{{ item.name }}</h2>
+            <p>{{ item.description }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
