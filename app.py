@@ -28,6 +28,9 @@ def menu():
                 <li>
                     <a href="/lab1"; style="text-decoration: none;">Первая лабораторная</a>
                 </li>
+                <li>
+                    <a href="/lab2"; style="text-decoration: none;">Вторая лабораторная</a>
+                </li>
             </ol>
         </div>
     </main>
@@ -306,3 +309,7 @@ furniture_items = [
 @app.route('/furniture')
 def furniture_list():
     return render_template('furniture.html', items=furniture_items)
+
+@app.route('/')
+def home():
+    return render_template('home.html')
