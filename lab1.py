@@ -48,6 +48,7 @@ def lab():
 </html>
 '''
 
+
 @lab1.route('/lab1/oak')
 def oak():
     return '''
@@ -61,6 +62,7 @@ def oak():
 </html>
 '''
 
+
 @lab1.route('/lab1/student')
 def student():
     return '''
@@ -73,6 +75,7 @@ def student():
     </body>
 </html>
 '''
+
 
 @lab1.route('/lab1/python')
 def python():
@@ -102,6 +105,7 @@ def python():
     </body>
 </html>
 '''
+
 
 @lab1.route('/lab1/theatre')
 def theatre():
