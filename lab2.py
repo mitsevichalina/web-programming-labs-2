@@ -20,27 +20,27 @@ furniture_items = [
     {
         "name": "Стул",
         "description": "Удобный стул для вашего дома.",
-        "image": "chair.jpg"
+        "image": "lab2/chair.jpg"
     },
     {
         "name": "Стол",
         "description": "Прочный стол для обеденной зоны.",
-        "image": "table.jpg"
+        "image": "lab2/table.jpg"
     },
     {
         "name": "Диван",
         "description": "Комфортабельный диван для гостиной.",
-        "image": "sofa.jpg"
+        "image": "lab2/sofa.jpg"
     },
     {
         "name": "Книжный шкаф",
         "description": "Элегантный шкаф для книг и аксессуаров.",
-        "image": "bookshelf.jpg"
+        "image": "lab2/bookshelf.jpg"
     },
     {
         "name": "Кровать",
         "description": "Уютная кровать для комфортного сна.",
-        "image": "bed.jpg"
+        "image": "lab2/bed.jpg"
     }
 ]
 
@@ -120,7 +120,7 @@ def example():
         {'name':'мандарины', 'price': 95},
         {'name':'манго', 'price': 321}
     ]
-    return render_template('example.html', 
+    return render_template('lab2/example.html', 
                            name=name, lab_number=lab_number, group=group, 
                            course=course, fruits=fruits)
 

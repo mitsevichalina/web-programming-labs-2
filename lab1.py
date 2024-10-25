@@ -41,7 +41,7 @@ def lab():
             </ol>
         </h2>
         </ol>
-        <link rel="stylesheet" href="''' + url_for('static', filename='lab1.css') + '''">
+        <link rel="stylesheet" href="''' + url_for('static', filename='lab1/lab1.css') + '''">
             &copy; Алина Мицевич, ФБИ-24, 3 курс, 2024
         </footer>
     </body>
@@ -56,8 +56,8 @@ def oak():
 <html>
     <body>
         <h1>Дуб</h1>
-        <link rel="stylesheet" href="''' + url_for('static', filename='lab1.css') + '''">
-        <img src="''' + url_for('static', filename='oak.jpg') + '''">
+        <link rel="stylesheet" href="''' + url_for('static', filename='lab1/lab1.css') + '''">
+        <img src="''' + url_for('static', filename='lab1/oak.jpg') + '''">
     </body>
 </html>
 '''
@@ -70,8 +70,8 @@ def student():
 <html>
     <body>
         <h1>Мицевич Алина Александровна</h1>
-        <link rel="stylesheet" href="''' + url_for('static', filename='lab1.css') + '''">
-        <img src="''' + url_for('static', filename='ngtu.png') + '''">
+        <link rel="stylesheet" href="''' + url_for('static', filename='lab1/lab1.css') + '''">
+        <img src="''' + url_for('static', filename='lab1/ngtu.png') + '''">
     </body>
 </html>
 '''
@@ -100,8 +100,8 @@ def python():
         Кроме того, Python применяется в научных исследованиях — используется для анализа 
         данных и создания моделей. Этот язык создает обилие возможностей для науки о данных.
         </p>
-        <link rel="stylesheet" href="''' + url_for('static', filename='lab1.css') + '''">
-        <img src="''' + url_for('static', filename='python.jpg') + '''">
+        <link rel="stylesheet" href="''' + url_for('static', filename='lab1/lab1.css') + '''">
+        <img src="''' + url_for('static', filename='lab1/python.jpg') + '''">
     </body>
 </html>
 '''
@@ -137,8 +137,8 @@ def theatre():
         произведениях военных или политических тем. Их тексты также насыщены мифологией, хотя 
         религиозные темы были наиболее близки к древнейшей из великой троицы: Эсхилу.
         </p>
-        <link rel="stylesheet" href="''' + url_for('static', filename='lab1.css') + '''">
-        <img src="''' + url_for('static', filename='theatre.jpg') + '''">
+        <link rel="stylesheet" href="''' + url_for('static', filename='lab1/lab1.css') + '''">
+        <img src="''' + url_for('static', filename='lab1/theatre.jpg') + '''">
     </body>
 </html>
 '''

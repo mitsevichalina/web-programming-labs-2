@@ -45,7 +45,7 @@ def menu():
             </ol>
         </div>
     </main>
-    <link rel="stylesheet" href="''' + url_for('static', filename='lab1.css') + '''">
+    <link rel="stylesheet" href="''' + url_for('static', filename='lab1/lab1.css') + '''">
         <footer>
             &copy; Алина Мицевич, ФБИ-24, 3 курс, 2024
         </footer>
