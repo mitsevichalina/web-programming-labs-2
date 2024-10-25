@@ -53,14 +53,10 @@ def menu():
 </html>
 '''
 
+
 @app.route('/start')
 def start_menu():
-    return '''
-        <h1>Главная страница</h1>
-        <ul>
-            <li><a href="/lab3/">Лабораторная 3</a></li>
-        </ul>
-    '''
+    return redirect('/lab3/')
 
 if __name__ == '__main__':
     app.run(debug=True)
