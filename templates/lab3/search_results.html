@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block lab %}Результаты поиска{% endblock %}
+
+{% block main %}
+    <h1>Результаты поиска</h1>
+    
+    {% if books %}
+        <p>Книги в диапазоне от {{ min_price }} до {{ max_price }} рублей:</p>
+        <ul>
+            {% for book in books %}
+                <li>
+                    <strong>{{ book.title }}</strong> - {{ book.price }} руб.<br>
+                    Автор: {{ book.author }}, Жанр: {{ book.genre }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Книги в указанном диапазоне не найдены.</p>
+    {% endif %}
+    
+    <a href="{{ url_for('lab3.book_search') }}">Вернуться к форме поиска</a>
+{% endblock %}

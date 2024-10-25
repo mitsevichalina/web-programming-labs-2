@@ -165,3 +165,52 @@ def clear_cookies():
     resp.delete_cookie('font_style')
 
     return resp
+
+
+from flask import Blueprint, render_template, request
+
+lab3 = Blueprint('lab3', __name__)
+
+# Список книг
+books = [
+    {"title": "Война и мир", "price": 1500, "author": "Лев Толстой", "genre": "Роман"},
+    {"title": "Преступление и наказание", "price": 700, "author": "Федор Достоевский", "genre": "Роман"},
+    {"title": "Мастер и Маргарита", "price": 800, "author": "Михаил Булгаков", "genre": "Роман"},
+    {"title": "1984", "price": 600, "author": "Джордж Оруэлл", "genre": "Фантастика"},
+    {"title": "Гарри Поттер и философский камень", "price": 500, "author": "Дж.К. Роулинг", "genre": "Фэнтези"},
+    {"title": "Три товарища", "price": 900, "author": "Эрих Мария Ремарк", "genre": "Роман"},
+    {"title": "Алхимик", "price": 400, "author": "Пауло Коэльо", "genre": "Роман"},
+    {"title": "Собачье сердце", "price": 300, "author": "Михаил Булгаков", "genre": "Сатира"},
+    {"title": "Сияние", "price": 650, "author": "Стивен Кинг", "genre": "Ужасы"},
+    {"title": "Тень горы", "price": 1100, "author": "Грегори Дэвид Робертс", "genre": "Роман"},
+    {"title": "Убить пересмешника", "price": 750, "author": "Харпер Ли", "genre": "Роман"},
+    {"title": "Великий Гэтсби", "price": 500, "author": "Фрэнсис Скотт Фицджеральд", "genre": "Роман"},
+    {"title": "О дивный новый мир", "price": 600, "author": "Олдос Хаксли", "genre": "Фантастика"},
+    {"title": "Маленький принц", "price": 400, "author": "Антуан де Сент-Экзюпери", "genre": "Сказка"},
+    {"title": "Братья Карамазовы", "price": 1300, "author": "Федор Достоевский", "genre": "Роман"},
+    {"title": "451 градус по Фаренгейту", "price": 700, "author": "Рэй Брэдбери", "genre": "Фантастика"},
+    {"title": "Старик и море", "price": 450, "author": "Эрнест Хемингуэй", "genre": "Роман"},
+    {"title": "На игле", "price": 800, "author": "Ирвин Уэлш", "genre": "Роман"},
+    {"title": "Сказки старого Вильнюса", "price": 350, "author": "Роман Кунцевич", "genre": "Сказка"},
+    {"title": "Чудо", "price": 900, "author": "Р.J. Палацио", "genre": "Роман"},
+    {"title": "Золотой компас", "price": 600, "author": "Филип Пулман", "genre": "Фэнтези"},
+]
+
+# Обработчик для отображения формы поиска книг
+@lab3.route('/lab3/book_search')
+def book_search():
+    return render_template('lab3/book_search.html')
+
+# Обработчик для поиска книг по диапазону цен
+@lab3.route('/lab3/search_results', methods=['GET'])
+def search_results():
+    min_price = request.args.get('min_price', type=int)
+    max_price = request.args.get('max_price', type=int)
+    
+    # Фильтрация книг по цене
+    filtered_books = [
+        book for book in books 
+        if min_price <= book["price"] <= max_price
+    ]
+    
+    return render_template('lab3/search_results.html', books=filtered_books, min_price=min_price, max_price=max_price)

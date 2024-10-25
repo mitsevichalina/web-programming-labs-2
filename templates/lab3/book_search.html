@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block lab %}Поиск книг{% endblock %}
+
+{% block main %}
+    <h1>Поиск книг по цене</h1>
+    <form action="{{ url_for('lab3.search_results') }}" method="get">
+        <label>Мин. цена:</label>
+        <input type="number" name="min_price" required>
+        
+        <label>Макс. цена:</label>
+        <input type="number" name="max_price" required>
+        
+        <button type="submit">Искать</button>
+    </form>
+{% endblock %}
