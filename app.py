@@ -1,4 +1,4 @@
-from flask import Blueprint, redirect, url_for
+from flask import redirect, url_for
 from flask import Flask
 from lab1 import lab1
 from lab2 import lab2
@@ -23,6 +23,7 @@ def menu():
 <html>
     <head>
         <title>НГТУ, ФБ, Лабораторные работы</title>
+        <link rel="stylesheet" href="''' + url_for('static', filename='lab1/lab1.css') + '''">
     </head>
     <body>
         <header>
@@ -50,18 +51,9 @@ def menu():
             </ol>
         </div>
     </main>
-    <link rel="stylesheet" href="''' + url_for('static', filename='lab1/lab1.css') + '''">
         <footer>
             &copy; Алина Мицевич, ФБИ-24, 3 курс, 2024
         </footer>
     </body>
 </html>
 '''
-
-
-@app.route('/start')
-def start_menu():
-    return redirect('/lab3/')
-
-if __name__ == '__main__':
-    app.run(debug=True)
