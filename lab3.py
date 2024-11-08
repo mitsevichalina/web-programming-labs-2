@@ -126,16 +126,16 @@ def ticket():
 
     if not fio or not berth or not age or not departure or not destination or not date:
         flash("Заполните все обязательные поля.")
-        return redirect(url_for('lab3.ticket_form'))
+        return redirect(url_for('lab3/ticket_form'))
 
     try:
         age = int(age)
         if age < 1 or age > 120:
             flash("Возраст должен быть от 1 до 120 лет.")
-            return redirect(url_for('lab3.ticket_form'))
+            return redirect(url_for('lab3/ticket_form'))
     except ValueError:
         flash("Возраст должен быть числом.")
-        return redirect(url_for('lab3.ticket_form'))
+        return redirect(url_for('lab3/ticket_form'))
 
     ticket_type = "Детский билет" if age < 18 else "Взрослый билет"
     price = 700 if age < 18 else 1000
@@ -166,10 +166,6 @@ def clear_cookies():
 
     return resp
 
-
-from flask import Blueprint, render_template, request
-
-lab3 = Blueprint('lab3', __name__)
 
 # Список книг
 books = [
