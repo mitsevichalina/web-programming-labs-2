@@ -121,34 +121,38 @@ def login():
     if request.method == 'GET':
         if 'login' in session:
             authorized=True
-            login = session['login']
+            name = session.get('name', '')
         else:
             authorized=False
-            login = ''
-        return render_template('lab4/login.html', authorized=authorized, login=login)
-    
+            name = ''
+        return render_template('lab4/login.html', authorized=authorized, name=name)
+
     login = request.form.get('login')
     password = request.form.get('password')
+
+    if not login:
+        error = 'Не введён логин'
+        return render_template('lab4/login.html', error=error, authorized=False, login=login)
+    elif not password:
+        error = 'Не введён пароль'
+        return render_template('lab4/login.html', error=error, authorized=False, login=login)
 
     for user in users:
         if login == user['login'] and password == user['password']:
             session['login'] = login
+            session['name'] = user['name']
             return redirect('/lab4/login')
-    
-    error = 'Неверные логин и/или пароль'
 
-    if login == 'alex' and password == '123':
-        return render_template('lab4/login.html', login=login, authorized=True)
-    
     error = 'Неверные логин и/или пароль'
-    return render_template('lab4/login.html', error=error, authorized=False)
+    return render_template('lab4/login.html', error=error, authorized=False, login=login)
+
 
 
 users = [
-    {'login': 'alex', 'password': '123'},
-    {'login': 'bob', 'password': '555'},
-    {'login': 'alina', 'password': '748'},
-    {'login': 'sofia', 'password': '244'},
+    {'login': 'alex', 'password': '123', 'name': 'Alex Henderson', 'gender': 'male'},
+    {'login': 'bob', 'password': '555', 'name': 'Bob Jordan', 'gender': 'male'},
+    {'login': 'alina', 'password': '748', 'name': 'Alina Mitsevich', 'gender': 'female'},
+    {'login': 'sofia', 'password': '244', 'name': 'Sofia Mironova', 'gender': 'female'},
 ]
 
 
