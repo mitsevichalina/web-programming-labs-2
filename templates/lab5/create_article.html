@@ -5,20 +5,36 @@
 {% block main %}
     <h1>Создание статьи</h1>
 
-    <form method="post">
+    {% if error %}
+        <div style="color: red;">
+            {{ error }}
+        </div>
+    {% endif %}
+    <form method="POST">
         <div>
-            <label>
-                Название статьи:
-                <input type="text" maxlength="50" name="title">
-            </label>
+            <label for="title">Название статьи:</label>
+            <input type="text" name="title" id="title" required>    
+        </div>
+        
+        <div>
+            <label for="article_text">Текст статьи:</label>
+            <p>
+                <textarea name="article_text" id="article_text" required></textarea>
+            </p>  
         </div>
 
         <div>
-            <textarea name="article_text"></textarea>
+            <label for="is_favourate">Избранная:</label>
+            <input type="checkbox" name="is_favourate" id="is_favourate">
         </div>
 
         <div>
-            <button type="submit">Готово</button>
+            <label for="is_public">Публичная:</label>
+            <input type="checkbox" name="is_public" id="is_public">
+        </div>
+
+        <div>
+            <button type="submit">Создать статью</button>
         </div>
     </form>
 {% endblock %}
