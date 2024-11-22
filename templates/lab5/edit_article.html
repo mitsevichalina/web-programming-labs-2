@@ -16,11 +16,17 @@
         </div>
 
         <div>
-            <textarea name="article_text">{{ article['article_text'] }}</textarea>
+            <label for="is_public">Публичная:</label>
+            <input type="checkbox" name="is_public" id="is_public" {% if article.is_public %}checked{% endif %}>
         </div>
 
         <div>
-            <button type="submit">Обновить</button>
+            <label for="is_favourate">Избранная:</label>
+            <input type="checkbox" name="is_favourate" id="is_favourate" {% if article.is_favourate %}checked{% endif %}>
+        </div>
+
+        <div>
+            <button type="submit">Сохранить изменения</button>
         </div>
     </form>
 {% endblock %}
