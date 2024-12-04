@@ -160,3 +160,65 @@ document.addEventListener('DOMContentLoaded', function() {
     <ul id="office-list"></ul>
     <p id="total-price">Общая стоимость аренды: 0 руб.</p>
 {% endblock %}
+
+{% block style %}
+<style>
+body {
+    background-color: ivory;
+    color: tan;
+    font-family: Arial;
+    margin: 0px;
+}
+    
+main {
+    margin-bottom: 40px;
+    padding: 10px;
+}
+footer {
+    background-color: beige;
+    color: tan;
+    font-family: Arial;
+    margin: 0px;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+}
+    
+header {
+    background-color: beige;
+    color: tan;
+    font-family: Arial;
+    margin: 0px;
+}
+    
+.error {
+    color: red;
+    font-weight: bold;
+    margin-left: 5px;
+}
+    
+.block {
+    width: 80%;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+    
+button {
+    display: inline-block;
+    margin: 10px;
+    padding: 10px 20px;
+    background-color: #5B3A29;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}    
+</style>
+{% endblock %}
