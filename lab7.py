@@ -103,3 +103,12 @@ def put_film(id):
         return films[id]
     else:
         abort(404)        
+
+
+@lab7.route('/lab7/rest-api/films/', methods=['POST'])
+def add_film():
+    film = request.get_json()
+    if not film:
+        abort(400)
+    films.append(film)
+    return {"id": len(films) - 1}, 201
