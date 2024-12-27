@@ -1,122 +1,139 @@
 from flask import Blueprint, jsonify, render_template, request, abort
-
+from datetime import datetime
+from flask import Blueprint, render_template, request, jsonify, abort, current_app
+import psycopg2
+from psycopg2.extras import RealDictCursor
 
 lab7 = Blueprint('lab7', __name__)
+
+def db_connect():
+    conn = psycopg2.connect(
+        host='127.0.0.1',
+        database='alina_mitsevich_knowledge_base',
+        user='alina_mitsevich_knowledge_base',
+        password='123'
+    )
+    cur = conn.cursor(cursor_factory=RealDictCursor)
+    return conn, cur
+
+def db_close(conn, cur):
+    conn.commit()
+    cur.close()
+    conn.close()
 
 @lab7.route('/lab7/')
 def main():
     return render_template('lab7/index.html')
 
 
-films = [
-    {
-        "title": "IT",
-        "title_ru": "Оно",
-        "year": 2017,
-        "description": "Когда в городке Дерри штата Мэн начинают пропадать дети, \
-        несколько ребят сталкиваются со своими величайшими страхами — не только \
-        с группой школьных хулиганов, но со злобным клоуном Пеннивайзом, \
-        список жертв которого уходит вглубь веков."
-    },
-    {
-        "title": "Charlie and the Chocolate Factory",
-        "title_ru": "Чарли и шоколадная фабрика",
-        "year": 2005,
-        "description": "Какие чудеса ждут вас на фабрике Вилли Вонки? Только \
-        представьте: травяные луга из сладкого мятного сахара в Шоколадной \
-        Комнате ... Можно проплыть по Шоколадной реке на розовой сахарной \
-        лодке ... Или поставить эксперименты в Комнате изобретений с леденцами,\
-        которые никогда не тают ... Понаблюдать за дрессированными белками в \
-        Ореховой Комнате или отправиться в стеклянном лифте в Телевизионную \
-        Комнату. Вы найдете слишком много смешного, чуть таинственного и настолько \
-        захватывающего в этом путешествии, что оно станет настолько же приятным и \
-        сладким для вас, как восхитительная сладкая палочка с розовой сливочной \
-        помадкой от Вилли Вонки."
-    },
-    {
-        "title": "Knives Out",
-        "title_ru": "Достать ножи",
-        "year": 2019,
-        "description": "На следующее утро после празднования 85-летия известного \
-        автора криминальных романов Харлана Тромби виновника торжества находят \
-        мёртвым. Налицо — явное самоубийство, но полиция по протоколу опрашивает \
-        всех присутствующих в особняке членов семьи, хотя, в этом деле больше \
-        заинтересован частный детектив Бенуа Блан. Тем же утром он получил \
-        конверт с наличными от неизвестного и заказ на расследование \
-        смерти Харлана. Не нужно быть опытным следователем, чтобы понять, что \
-        все приукрашивают свои отношения с почившим главой семейства, но Блану \
-        достаётся настоящий подарок — медсестра покойного, которая физически \
-        не выносит ложь."
-    },
-    {
-        "title": "Interstellar",
-        "title_ru": "Интерстеллар",
-        "year": 2014,
-        "description": "Когда засуха, пыльные бури и вымирание растений приводят \
-        человечество к продовольственному кризису, коллектив исследователей и \
-        учёных отправляется сквозь червоточину (которая предположительно соединяет \
-        области пространства-времени через большое расстояние) в путешествие, чтобы \
-        превзойти прежние ограничения для космических путешествий человека и найти \
-        планету с подходящими для человечества условиями."
-    },
-    {
-        "title": "Kill Bill",
-        "title_ru": "Убить Билла",
-        "year": 2003,
-        "description": "В беременную наёмную убийцу по кличке Чёрная Мамба во время \
-        бракосочетания стреляет человек по имени Билл. Но голова у женщины оказалась \
-        крепкой — пролежав четыре года в коме, бывшая невеста приходит в себя. Она \
-        горит желанием найти предателей. Теперь только безжалостная месть успокоит \
-        сердце Чёрной Мамбы, и она начинает по очереди убивать членов банды Билла, \
-        решив оставить главаря напоследок."
-    },
-]
-
-
 @lab7.route('/lab7/rest-api/films/', methods=['GET'])
 def get_films():
+    conn, cur = db_connect()
+    cur.execute("SELECT * FROM films")
+    films = cur.fetchall()
+    db_close(conn, cur)
     return jsonify(films)
 
 
 @lab7.route('/lab7/rest-api/films/<int:id>', methods=['GET'])
 def get_film(id):
-    if 0 <= id < len(films):
-        return jsonify(films[id])
-    else:
+    conn, cur = db_connect()
+    if current_app.config.get('DB_TYPE') == 'postgres':
+        cur.execute("SELECT * FROM films WHERE id = %s", (id,))
+    else:  
+        cur.execute("SELECT * FROM films WHERE id = ?", (id,))
+    film = cur.fetchone()
+    db_close(conn, cur)
+
+    if not film:
         abort(404)
+
+    return jsonify(film)
 
 
 @lab7.route('/lab7/rest-api/films/<int:id>', methods=['DELETE'])
 def del_film(id):
-    if 0 <= id < len(films):
-        del films[id]
-        return '', 204
-    else:
+    conn, cur = db_connect()
+    cur.execute("DELETE FROM films WHERE id = %s RETURNING *", (id,))
+    deleted_film = cur.fetchone()
+    db_close(conn, cur)
+
+    if not deleted_film:
         abort(404)
+
+    return '', 204
 
 
 @lab7.route('/lab7/rest-api/films/<int:id>', methods=['PUT'])
 def put_film(id):
-    if id < 0 or id >= len(films):
-        abort(404)
     film = request.get_json()
-    if film['description'] == '':
+
+    if not film.get('description', ''):
         return jsonify({'description': 'Заполните описание'}), 400
-    if not film.get('title'):
-        film['title'] = film['title_ru']
-    films[id] = film
-    return jsonify(films[id])
-      
+    elif len(film['description']) > 2000:
+        return jsonify({'description': 'Описание не должно превышать 2000 символов'}), 400
+
+    if not film.get('title') and not film.get('title_ru'):
+        return jsonify({'title': 'Заполните поля с названиями'}), 400
+
+    if not film.get('title_ru'):
+        return jsonify({'title_ru': 'Заполните русское название'}), 400
+
+    if not film.get('year'):
+        return jsonify({'year': 'Укажите год выпуска фильма'}), 400
+    elif not str(film['year']).isdigit() or int(film['year']) < 1895 or int(film['year']) > 2100:
+        return jsonify({'year': 'Введите корректный год (1800-2100)'}), 400
+
+    conn, cur = db_connect()
+
+    if current_app.config.get('DB_TYPE') == 'postgres':
+        cur.execute("""
+            UPDATE films
+            SET title = %s, title_ru = %s, year = %s, description = %s
+            WHERE id = %s RETURNING *
+        """, (film['title'], film['title_ru'], film['year'], film['description'], id))
+    else:  
+        cur.execute("""
+            UPDATE films
+            SET title = ?, title_ru = ?, year = ?, description = ?
+            WHERE id = ? RETURNING *
+        """, (film['title'], film['title_ru'], film['year'], film['description'], id))
+
+    updated_film = cur.fetchone()
+    db_close(conn, cur)
+
+    if not updated_film:
+        abort(404)
+
+    return jsonify(updated_film)
 
 
 @lab7.route('/lab7/rest-api/films/', methods=['POST'])
 def add_film():
     film = request.get_json()
-    if not film:
-        abort(400)
-    if film.get('description', '') == '':
+
+    if not film.get('description', ''):
         return jsonify({'description': 'Заполните описание'}), 400
-    if not film.get('title'):
-        film['title'] = film['title_ru']
-    films.append(film)
-    return jsonify(film), 201
+    elif len(film['description']) > 2000:
+        return jsonify({'description': 'Описание не должно превышать 2000 символов'}), 400
+
+    if not film.get('title') and not film.get('title_ru'):
+        return jsonify({'title': 'Заполните поля с названиями'}), 400
+
+    if not film.get('title_ru'):
+        return jsonify({'title_ru': 'Заполните русское название'}), 400
+
+    if not film.get('year'):
+        return jsonify({'year': 'Укажите год выпуска фильма'}), 400
+    elif not str(film['year']).isdigit() or int(film['year']) < 1800 or int(film['year']) > 2100:
+        return jsonify({'year': 'Введите корректный год (1800-2100)'}), 400
+    
+    conn, cur = db_connect()
+    cur.execute("""
+        INSERT INTO films (title, title_ru, year, description)
+        VALUES (%s, %s, %s, %s) RETURNING *
+    """, (film['title'], film['title_ru'], film['year'], film['description']))
+    new_film = cur.fetchone()
+    db_close(conn, cur)
+
+    return jsonify(new_film), 201
