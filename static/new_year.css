@@ -1,0 +1,153 @@
+/* Новогодний стиль */
+body {
+    background-color: #0a3d62 !important; /* Темно-синий фон */
+    color: #ffffff !important; /* Белый текст */
+    font-family: 'Comic Sans MS', cursive, sans-serif !important; /* Весёлый шрифт */
+    text-align: center;
+}
+
+header {
+    background-color: #e55039 !important; /* Красный фон для шапки */
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    font-size: 2.5em;
+    margin: 0;
+    color: #fad390 !important; /* Жёлтый цвет для заголовка */
+}
+
+main {
+    padding: 20px;
+}
+
+form {
+    background-color: rgba(255, 255, 255, 0.1); /* Полупрозрачный белый фон */
+    padding: 20px;
+    border-radius: 10px;
+    display: inline-block;
+    margin: 20px auto;
+}
+
+label {
+    display: block;
+    margin: 10px 0;
+    font-size: 1.2em;
+}
+
+input[type="text"],
+input[type="number"] {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    width: 80%;
+    margin: 10px 0;
+}
+
+input[type="radio"] {
+    margin-right: 10px;
+}
+
+button {
+    background-color: #e55039 !important; /* Красный цвет кнопки */
+    color: #ffffff !important;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #eb2f06 !important; /* Темно-красный при наведении */
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+/* Новогодние украшения */
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('/static/images/snowflakes.png') repeat;
+    pointer-events: none;
+    opacity: 0.5;
+    z-index: -1;
+}
+
+/* Анимация снежинок */
+@keyframes snow {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(100vh); }
+}
+
+.snowflake {
+    position: absolute;
+    top: -50px;
+    width: 10px;
+    height: 10px;
+    background: white;
+    border-radius: 50%;
+    animation: snow linear infinite;
+}
+
+.snowflake:nth-child(1) {
+    left: 10%;
+    animation-duration: 10s;
+}
+
+.snowflake:nth-child(2) {
+    left: 20%;
+    animation-duration: 12s;
+}
+
+.snowflake:nth-child(3) {
+    left: 30%;
+    animation-duration: 8s;
+}
+
+.snowflake:nth-child(4) {
+    left: 40%;
+    animation-duration: 14s;
+}
+
+.snowflake:nth-child(5) {
+    left: 50%;
+    animation-duration: 9s;
+}
+
+.snowflake:nth-child(6) {
+    left: 60%;
+    animation-duration: 11s;
+}
+
+.snowflake:nth-child(7) {
+    left: 70%;
+    animation-duration: 7s;
+}
+
+.snowflake:nth-child(8) {
+    left: 80%;
+    animation-duration: 13s;
+}
+
+.snowflake:nth-child(9) {
+    left: 90%;
+    animation-duration: 10s;
+}
+
+.snowflake:nth-child(10) {
+    left: 95%;
+    animation-duration: 15s;
+}

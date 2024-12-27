@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block lab %}Лабораторная работа 9{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='new_year.css') }}">
+{% endblock %}
+
+{% block main %}
+    <h1>Шаг 5: Выберите предпочтение</h1>
+    <form method="POST">
+        {% if preference1 == 'tasty' %}
+            <label>
+                <input type="radio" name="preference2" value="sweet" required> Сладкое
+            </label>
+            <label>
+                <input type="radio" name="preference2" value="savory" required> Сытное
+            </label>
+        {% else %}
+            <label>
+                <input type="radio" name="preference2" value="flowers" required> Цветы
+            </label>
+            <label>
+                <input type="radio" name="preference2" value="art" required> Искусство
+            </label>
+        {% endif %}
+        <button type="submit">Завершить</button>
+    </form>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block lab %}Лабораторная работа 9{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='new_year.css') }}">
+{% endblock %}
+
+{% block main %}
+    <h1>Поздравление</h1>
+    <p>{{ greeting }}</p>
+    <img src="{{ url_for('static', filename='images/' + image) }}" alt="Подарок">
+{% endblock %}

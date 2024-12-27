@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block lab %}Лабораторная работа 9{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='new_year.css') }}">
+{% endblock %}
+
+{% block main %}
+    <h1>Шаг 3: Выберите ваш пол</h1>
+    <form method="POST">
+        <label>
+            <input type="radio" name="gender" value="male" required> Мужчина
+        </label>
+        <label>
+            <input type="radio" name="gender" value="female" required> Женщина
+        </label>
+        <button type="submit">Далее</button>
+    </form>
+{% endblock %}
