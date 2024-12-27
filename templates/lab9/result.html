@@ -10,4 +10,8 @@
     <h1>Поздравление</h1>
     <p>{{ greeting }}</p>
     <img src="{{ url_for('static', filename='images/' + image) }}" alt="Подарок">
+    <br>
+    <a href="{{ url_for('lab9.reset') }}" style="margin-top: 20px; display: inline-block; padding: 10px 20px; background-color: #e55039; color: white; text-decoration: none; border-radius: 5px;">
+        Сбросить и начать заново
+    </a>
 {% endblock %}
