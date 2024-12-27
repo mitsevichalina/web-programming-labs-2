@@ -14,3 +14,4 @@ class articles(db.Model):
     title = db.Column(db.String(100), nullable=False)
     article_text = db.Column(db.Text, nullable=False)
     login_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)  # Внешний ключ для связи с пользователем
+    is_public = db.Column(db.Boolean, default=False)  # Поле для публичных статей

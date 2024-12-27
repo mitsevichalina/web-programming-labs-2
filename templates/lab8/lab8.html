@@ -4,12 +4,15 @@
 
 {% block main %}
 <h1>База знаний</h1>
-    <div class="ka-block">
-        <a href="/lab8/login"><button>Вход</button></a>
-        <a href="/lab8/register"><button>Регистрация</button></a>
+    <div class="block">
+        {% if login %}
+            <a href="/lab8/logout"><button>Выход</button></a>
+        {% else %}
+            <a href="/lab8/login"><button>Вход</button></a>
+            <a href="/lab8/register"><button>Регистрация</button></a>
+        {% endif %}
         <a href="/lab8/articles"><button>Cписок статей</button></a>
         <a href="/lab8/create"><button>Создать статью</button></a>
-        <div><i>Anonymous</i></div>
+        <div><i>{{ login if login else 'Anonymous' }}</i></div>
     </div>
-
 {% endblock %}

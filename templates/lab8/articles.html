@@ -4,14 +4,21 @@
 
 {% block main %}
     <h1>Статьи</h1>
+    <form action="/lab8/articles" method="get">
+        <input type="text" name="search" placeholder="Поиск по статьям" value="{{ request.args.get('search', '') }}">
+        <button type="submit">Искать</button>
+    </form>
     {% if articles %}
         {% for article in articles %}
             <h2>{{ article.title }}</h2>
             <blockquote>{{ article.article_text }}</blockquote>
-            <form action="{{ url_for('lab8.delete', id=article.id) }}" method="post">
-                <button type="submit">Удалить</button>
-            </form>
-            <a href="{{ url_for('lab8.edit', id=article.id) }}">Редактировать</a>
+            <p>Автор: {{ article.author.login }}</p>
+            {% if article.login_id == current_user.id %}
+                <form action="{{ url_for('lab8.delete', id=article.id) }}" method="post">
+                    <button type="submit">Удалить</button>
+                </form>
+                <a href="{{ url_for('lab8.edit', id=article.id) }}">Редактировать</a>
+            {% endif %}
         {% endfor %}
     {% else %}
         <p>Нет доступных статей.</p>

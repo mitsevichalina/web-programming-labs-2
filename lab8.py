@@ -8,7 +8,7 @@ lab8 = Blueprint('lab8', __name__)
 
 @lab8.route('/lab8/')
 def lab():
-    return render_template('lab8/lab8.html')
+    return render_template('lab8/lab8.html', login=current_user.login if current_user.is_authenticated else None)
 
 @lab8.route('/lab8/register/', methods=['GET', 'POST'])
 def register():
@@ -66,10 +66,18 @@ def logout():
     return redirect('/lab8/')
 
 @lab8.route('/lab8/articles/')
-@login_required
 def article_list():
-    user_articles = articles.query.filter_by(login_id=current_user.id).all()
-    return render_template('lab8/articles.html', articles=user_articles)
+    search_query = request.args.get('search', '')
+    if current_user.is_authenticated:
+        user_articles = articles.query.filter((articles.login_id == current_user.id) | (articles.is_public == True))
+    else:
+        user_articles = articles.query.filter_by(is_public=True)
+    
+    if search_query:
+        user_articles = user_articles.filter(articles.title.contains(search_query) | articles.article_text.contains(search_query))
+    
+    user_articles = user_articles.all()
+    return render_template('lab8/articles.html', articles=user_articles, login=current_user.login if current_user.is_authenticated else None)
 
 @lab8.route('/lab8/create', methods=['GET', 'POST'])
 @login_required
@@ -77,7 +85,8 @@ def create():
     if request.method == 'POST':
         title = request.form.get('title')
         article_text = request.form.get('article_text')
-        new_article = articles(title=title, article_text=article_text, login_id=current_user.id)
+        is_public = request.form.get('is_public') == 'on'
+        new_article = articles(title=title, article_text=article_text, login_id=current_user.id, is_public=is_public)
         db.session.add(new_article)
         db.session.commit()
         return redirect('/lab8/articles')
@@ -93,6 +102,7 @@ def edit(id):
     if request.method == 'POST':
         article.title = request.form.get('title')
         article.article_text = request.form.get('article_text')
+        article.is_public = request.form.get('is_public') == 'on'
         db.session.commit()
         return redirect('/lab8/articles')
     return render_template('lab8/edit.html', article=article)

@@ -11,6 +11,9 @@
         <div>
             <label>Статья: <textarea name="article_text">{{ article.article_text }}</textarea></label>
         </div>
+        <div>
+            <label>Публичная статья: <input type="checkbox" name="is_public" {% if article.is_public %}checked{% endif %}></label>
+        </div>
         <button type="submit">Сохранить</button>
     </form>
 {% endblock %}
