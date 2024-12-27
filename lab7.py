@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, abort
+from flask import Blueprint, jsonify, render_template, request, abort
 
 
 lab7 = Blueprint('lab7', __name__)
@@ -97,12 +97,12 @@ def del_film(id):
 
 @lab7.route('/lab7/rest-api/films/<int:id>', methods=['PUT'])
 def put_film(id):
-    if 0 <= id < len(films):
-        film = request.get_json()
-        films[id] = film
-        return films[id]
-    else:
-        abort(404)        
+    film = request.get_json()
+    
+    if not film.get('description', ''):
+        return jsonify({'description': 'Заполните описание'}), 400
+    films[id] = film
+    return films[id]       
 
 
 @lab7.route('/lab7/rest-api/films/', methods=['POST'])
@@ -110,5 +110,7 @@ def add_film():
     film = request.get_json()
     if not film:
         abort(400)
+    if film ['description'] == '':
+        return {'description': 'Заполните описание'}, 400
     films.append(film)
     return {"id": len(films) - 1}, 201
